@@ -5,8 +5,13 @@ import com.javaguru.products.repository.InMemoryRepository;
 import com.javaguru.products.service.validation.ProductValidationService;
 
 public class ProductService {
-    private InMemoryRepository repository = new InMemoryRepository();
-    private ProductValidationService validationService = new ProductValidationService();
+    private final InMemoryRepository repository;
+    private final ProductValidationService validationService;
+
+    public ProductService(InMemoryRepository repository, ProductValidationService validationService) {
+        this.repository = repository;
+        this.validationService = validationService;
+    }
 
     public Long createProduct(Product product) {
         validationService.validate(product);
@@ -22,4 +27,11 @@ public class ProductService {
         return repository.removeProductById(id);
     }
 
+    public void removeAllProducts() {
+        repository.removeAllProducts();
+    }
+
+    public void printAll() {
+        repository.printAll();
+    }
 }
